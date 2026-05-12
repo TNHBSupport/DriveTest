@@ -395,7 +395,10 @@ footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
 /* ===== MOBILE ===== */
 @media (max-width: 900px) {
   .nav-inner { flex-wrap: wrap; gap: 0.8rem; }
+  .nav-logo { order: 1; }
+  .hamburger { order: 2; margin-left: auto; }
   .nav-links {
+    order: 3;
     display: flex;
     width: 100%;
     flex-direction: column;
