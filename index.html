@@ -248,10 +248,14 @@ section { padding: 5rem 2rem; }
 /* ===== PACKAGES ===== */
 .packages { background: var(--cream); }
 .packages-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
-  align-items: start;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  align-items: stretch;
 }
 .pkg-card {
+  width: min(360px, 100%);
   background: white; border-radius: 18px; padding: 2.5rem 2rem;
   border: 1px solid var(--gray-200); transition: all 0.35s;
   position: relative;
