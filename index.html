@@ -394,8 +394,29 @@ footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
 
 /* ===== MOBILE ===== */
 @media (max-width: 900px) {
-  .nav-links { display: none; }
+  .nav-inner { flex-wrap: wrap; gap: 0.8rem; }
+  .nav-links {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    gap: 0.3rem;
+    list-style: none;
+    margin-top: 0.3rem;
+    background: rgba(10,30,61,0.98);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 0.8rem;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a {
+    display: block;
+    padding: 0.55rem 0.45rem;
+    border-radius: 6px;
+    color: rgba(255,255,255,0.88);
+  }
+  .nav-links a:hover { background: rgba(255,255,255,0.08); }
   .hamburger { display: block; }
+  .nav-cta { display: none; }
   .hero-inner { grid-template-columns: 1fr; text-align: center; }
   .hero-sub { margin-left: auto; margin-right: auto; }
   .hero-actions { justify-content: center; }
@@ -420,7 +441,7 @@ footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="#" class="nav-logo">VEL<span>'</span>S</a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinks">
       <li><a href="#services">Services</a></li>
       <li><a href="#why">Why Us</a></li>
       <li><a href="#packages">Packages</a></li>
@@ -428,7 +449,7 @@ footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
       <li><a href="#faq">FAQ</a></li>
     </ul>
     <a href="tel:4168307414" class="nav-cta">Call Now</a>
-    <button class="hamburger" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex'">
+    <button class="hamburger" type="button" aria-label="Toggle menu" aria-controls="navLinks" aria-expanded="false" onclick="toggleMobileMenu()">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
   </div>
@@ -749,6 +770,31 @@ footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
 // Scroll shadow on nav
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 30);
+});
+
+function toggleMobileMenu() {
+  const menu = document.getElementById('navLinks');
+  const button = document.querySelector('.hamburger');
+  const open = menu.classList.toggle('open');
+  button.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900) {
+    const menu = document.getElementById('navLinks');
+    const button = document.querySelector('.hamburger');
+    menu.classList.remove('open');
+    button.setAttribute('aria-expanded', 'false');
+  }
+});
+
+document.querySelectorAll('#navLinks a').forEach((link) => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth <= 900) {
+      document.getElementById('navLinks').classList.remove('open');
+      document.querySelector('.hamburger').setAttribute('aria-expanded', 'false');
+    }
+  });
 });
 
 // Reveal on scroll
